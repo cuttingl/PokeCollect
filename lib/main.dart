@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pokemon_tcg/pokemon_tcg.dart';
 import 'env.dart';
+import 'package:camera/camera.dart';
 
 /// Flutter code sample for [Checkbox].
 
@@ -16,7 +17,7 @@ class CheckboxExampleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text('Checkbox Sample')),
+        appBar: AppBar(title: const Text('PokeCollect sample test')),
         body: const Center(
           child: CheckboxExample(),
         ),
@@ -55,10 +56,13 @@ class _CheckboxExampleState extends State<CheckboxExample> {
           checkColor: Colors.white,
           value: isChecked,
           onChanged: (bool? value) {
-            setState(() async {
+            image = Image.network(card!.images.large);
+            text = StringBuffer(
+                    [card!.name, card!.artist, card!.attacks.first.name])
+                .toString();
+
+            setState(() {
               if (!isChecked) {
-                image = Image.network(card!.images.small);
-                text = StringBuffer([card!.name, card!.artist, card!.attacks.first.name ]).toString();
                 isChecked = value!;
               } else if (isChecked) {
                 image = Image.network(
@@ -71,6 +75,10 @@ class _CheckboxExampleState extends State<CheckboxExample> {
       ),
       Text(text),
       Image(image: image.image),
+      OutlinedButton(
+          onPressed: () {},
+          child: const SelectionContainer.disabled(
+              child: Text("Tap to Open camera")))
     ]));
   }
 }
