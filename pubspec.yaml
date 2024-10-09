@@ -16,6 +16,8 @@ dependencies:
   http: ^0.13.3
   pokemon_tcg: ^1.0.1
   camera: ^0.11.0+2
+  permission_handler: ^11.3.1
+  path_provider: ^2.1.4
 
 dev_dependencies:
   flutter_test:
