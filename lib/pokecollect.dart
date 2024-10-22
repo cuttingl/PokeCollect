@@ -1,8 +1,12 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:pokecollect/cameraview.dart';
+import 'package:flutter_tesseract_ocr/android_ios.dart';
+
 import 'package:pokemon_tcg/pokemon_tcg.dart';
+
+import 'package:pokecollect/cameraview.dart';
 import 'package:pokecollect/env.dart';
+import 'package:pokecollect/extract.dart';
 
 class Sample extends StatefulWidget {
   const Sample({super.key});
@@ -18,6 +22,7 @@ class _SampleState extends State<Sample> {
   Image image = Image.network(
       "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1msMCg.img");
   String text = "";
+  String extractedText = "";
 
   Future<PokemonCard?> getApi() async {
     final api = PokemonTcgApi(apiKey: apikey);
@@ -56,13 +61,24 @@ class _SampleState extends State<Sample> {
           Image(image: image.image),
           OutlinedButton(
               onPressed: () async {
-                await availableCameras().then((value) => Navigator.push(context,
-                MaterialPageRoute(
-                  builder: (_) => Cameraview(cameras: value)
-                )));
+                await availableCameras().then((value) =>
+                    Navigator.push(context,
+                        MaterialPageRoute(
+                            builder: (_) => Cameraview(cameras: value)
+                        )));
               },
               child: const SelectionContainer.disabled(
-                  child: Text("Tap to Open camera")))
+                  child: Text("Tap to Open camera"))),
+
+          OutlinedButton(
+              onPressed: () async {
+                extractedText = await FlutterTesseractOcr.extractText(card!.images.large);
+
+                Navigator.push(context, MaterialPageRoute(
+                    builder: (_) => ExtractView(extractedText: extractedText)
+                ));
+              }, child: const SelectionContainer.disabled(
+              child: Text("Tap to extract text")))
         ]));
   }
 }

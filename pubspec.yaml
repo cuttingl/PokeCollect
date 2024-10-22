@@ -15,15 +15,22 @@ dependencies:
   cupertino_icons: ^1.0.8
   http: ^0.13.3
   pokemon_tcg: ^1.0.1
-  camera: ^0.11.0+2
+  camera: ^0.10.2+1
   permission_handler: ^11.3.1
   path_provider: ^2.1.4
   go_router: ^13.2.0
+  ocr_scan_text: ^1.3.1
+  flutter_tesseract_ocr: ^0.4.26
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+
+assets:
+  - assets/
+  - assets/tessdata/
 
 flutter:
   uses-material-design: true
