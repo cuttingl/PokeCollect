@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tesseract_ocr/android_ios.dart';
+//import 'package:flutter_tesseract_ocr/android_ios.dart';
 
 import 'package:pokemon_tcg/pokemon_tcg.dart';
 
@@ -72,7 +72,7 @@ class _SampleState extends State<Sample> {
 
           OutlinedButton(
               onPressed: () async {
-                extractedText = await FlutterTesseractOcr.extractText(card!.images.large);
+                extractedText = "";
 
                 Navigator.push(context, MaterialPageRoute(
                     builder: (_) => ExtractView(extractedText: extractedText)

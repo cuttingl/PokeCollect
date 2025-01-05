@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
@@ -21,7 +20,9 @@ class _CameraviewState extends State<Cameraview> {
   void initState() {
     super.initState();
     initCamera(widget.cameras![1]);
-    widget.cameras!.forEach((it) => print(it.name));
+    for (var it in widget.cameras!) {
+      print(it.name);
+    }
     requestStoragePermission();
     controller = CameraController(widget.cameras![1], ResolutionPreset.max);
     controller.initialize().then((_) {

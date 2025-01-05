@@ -14,5 +14,4 @@ class _ExtractViewState extends State<ExtractView> {
     return Text(widget.extractedText!);
   }
 
-
 }
