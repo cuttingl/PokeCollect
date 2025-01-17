@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokecollect/extract.dart';
 import 'package:pokecollect/pokecollect.dart';
 
 class SampleApp extends StatelessWidget {
@@ -10,23 +11,23 @@ class SampleApp extends StatelessWidget {
     initialLocation: '/',
     routes: [
       GoRoute(
-        name: 'home', // Optional, add name to your routes. Allows you navigate by name instead of path
+        name: 'home',
         path: '/',
         builder: (context, state) => const Sample(),
       ),
+      GoRoute(
+          name: 'extract',
+          path: '/extract',
+          builder: (context, state) => ExtractView(),
+      ),
+
     ],
   );
 
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text('PokeCollect')),
-        body: const Center(
-          child: Sample(),
-        ),
-      ),
+    return MaterialApp.router(
+      routerConfig: _router,
     );
   }
 }
