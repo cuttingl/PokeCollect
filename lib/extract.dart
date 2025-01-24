@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ExtractView extends StatefulWidget {
@@ -14,11 +15,8 @@ class _ExtractViewState extends State<ExtractView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Extract data view"),
-      ),
-      body: Center(
+    return CupertinoPageScaffold(
+      child: Center(
         child: Text(widget.extractedText),
       ),
     );
