@@ -3,10 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokemon_tcg/pokemon_tcg.dart';
-
-import 'package:pokecollect/cameraview.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:pokecollect/env.dart';
-import 'package:pokecollect/extract.dart';
 
 class Sample extends StatefulWidget {
   const Sample({super.key});
@@ -22,11 +20,19 @@ class _SampleState extends State<Sample> {
       "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1msMCg.img");
   String text = "";
   String extractedText = "";
+  final textDetector = TextRecognizer(script: TextRecognitionScript.latin);
 
   Future<PokemonCard?> getApi() async {
     final api = PokemonTcgApi(apiKey: apikey);
     card = await api.getCard('sv6-3');
     return card;
+  }
+
+  Future<String> getExtractedText() async {
+    final inputImage = InputImage.fromFilePath('path/to/image');
+    final RecognizedText recognisedText =
+        await textDetector.processImage(inputImage);
+    return recognisedText.text;
   }
 
   @override
