@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pokemon_tcg/pokemon_tcg.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:pokecollect/env.dart';
+import 'package:http/http.dart' as http;
 
 class Sample extends StatefulWidget {
   const Sample({super.key});
@@ -24,12 +28,17 @@ class _SampleState extends State<Sample> {
 
   Future<PokemonCard?> getApi() async {
     final api = PokemonTcgApi(apiKey: apikey);
-    card = await api.getCard('sv6-3');
+    card = await api.getCard('sv6-5');
     return card;
   }
 
   Future<String> getExtractedText() async {
-    final inputImage = InputImage.fromFilePath('path/to/image');
+    final response = await http.get(Uri.parse(card!.images.large));
+    final documentDirectory = await getApplicationDocumentsDirectory();
+    final file = File('${documentDirectory.path}/image.png');
+    file.writeAsBytesSync(response.bodyBytes);
+
+    final inputImage = InputImage.fromFilePath(file.path);
     final RecognizedText recognisedText =
         await textDetector.processImage(inputImage);
     return recognisedText.text;
@@ -79,6 +88,7 @@ class _SampleState extends State<Sample> {
                   child: Text("Tap to Open camera"))),
           CupertinoButton(
               onPressed: () async {
+                extractedText = await getExtractedText();
                 context.go('/extract', extra: extractedText);
               },
               child: const SelectionContainer.disabled(

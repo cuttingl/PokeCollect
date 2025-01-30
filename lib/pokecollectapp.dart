@@ -1,9 +1,7 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokecollect/extract.dart';
 import 'package:pokecollect/pokecollect.dart';
-import 'package:pokecollect/cameraview.dart';
 
 class SampleApp extends StatelessWidget {
   SampleApp({super.key});
