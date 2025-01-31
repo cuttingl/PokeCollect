@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:pokecollect/extract.dart';
 import 'package:pokecollect/pokecollect.dart';
 
@@ -16,7 +17,7 @@ class SampleApp extends StatelessWidget {
           GoRoute(
             path: 'extract',
             builder: (context, state) {
-              final String extractedText = state.extra as String;
+              final List<TextBlock> extractedText = state.extra as List<TextBlock>;
               return ExtractView(extractedText: extractedText);
             },
           ),

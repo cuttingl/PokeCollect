@@ -20,6 +20,7 @@ class Sample extends StatefulWidget {
 class _SampleState extends State<Sample> {
   bool isChecked = false;
   PokemonCard? card;
+  List<TextBlock>? blocks;
   Image image = Image.network(
       "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1msMCg.img");
   String text = "";
@@ -32,7 +33,7 @@ class _SampleState extends State<Sample> {
     return card;
   }
 
-  Future<String> getExtractedText() async {
+  Future<List<TextBlock>?> getExtractedText() async {
     final response = await http.get(Uri.parse(card!.images.large));
     final documentDirectory = await getApplicationDocumentsDirectory();
     final file = File('${documentDirectory.path}/image.png');
@@ -41,12 +42,14 @@ class _SampleState extends State<Sample> {
     final inputImage = InputImage.fromFilePath(file.path);
     final RecognizedText recognisedText =
         await textDetector.processImage(inputImage);
-    return recognisedText.text;
+    blocks = recognisedText.blocks;
+    return blocks;
   }
 
   @override
   Widget build(BuildContext context) {
     getApi();
+    getExtractedText();
     return CupertinoPageScaffold(
         navigationBar: const CupertinoNavigationBar(
           middle: Text("Pokecollect"),
@@ -88,8 +91,7 @@ class _SampleState extends State<Sample> {
                   child: Text("Tap to Open camera"))),
           CupertinoButton(
               onPressed: () async {
-                extractedText = await getExtractedText();
-                context.go('/extract', extra: extractedText);
+                context.go('/extract', extra: blocks);
               },
               child: const SelectionContainer.disabled(
                   child: Text("Tap to go to extract view"))),
