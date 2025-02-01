@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  curved_labeled_navigation_bar: ^2.0.5
   cupertino_icons: ^1.0.8
   http: ^0.13.3
   pokemon_tcg: ^1.0.1

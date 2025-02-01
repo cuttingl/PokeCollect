@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:path_provider/path_provider.dart';
@@ -50,15 +51,26 @@ class _SampleState extends State<Sample> {
   Widget build(BuildContext context) {
     getApi();
     getExtractedText();
-    return CupertinoPageScaffold(
-        navigationBar: const CupertinoNavigationBar(
-          middle: Text("Pokecollect"),
+    return Scaffold(
+        bottomNavigationBar: CurvedNavigationBar(
+          animationDuration: Duration(milliseconds: 200),
+          color: Color.fromRGBO(238, 189, 0, 1),
+          backgroundColor: Colors.transparent,
+          buttonBackgroundColor: Color.fromRGBO(238, 189, 0, 1),
+          items: [
+            CurvedNavigationBarItem(child: Icon(Icons.home), label: 'Home'),
+            CurvedNavigationBarItem(child: Icon(Icons.camera), label: 'Camera'),
+            CurvedNavigationBarItem(child: Icon(Icons.search), label: 'Search'),
+          ],
+          onTap: (index) {
+            print("Index of the page is : $index");
+          }
         ),
-        child: Container(
+        body: Container(
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Center(
-            child: CupertinoCheckbox(
+            child: Checkbox(
               checkColor: Colors.white,
               value: isChecked,
               onChanged: (bool? value) {
@@ -83,13 +95,13 @@ class _SampleState extends State<Sample> {
           Image(
             image: image.image,
           ),
-          CupertinoButton(
+          OutlinedButton(
               onPressed: () async {
                 await availableCameras().then((value) => context.go('/camera'));
               },
               child: const SelectionContainer.disabled(
                   child: Text("Tap to Open camera"))),
-          CupertinoButton(
+          OutlinedButton(
               onPressed: () async {
                 context.go('/extract', extra: blocks);
               },

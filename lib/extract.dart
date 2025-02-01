@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
@@ -14,8 +13,8 @@ class ExtractView extends StatefulWidget {
 class _ExtractViewState extends State<ExtractView> {
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: Center(
+    return Scaffold(
+      body: Center(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
         children: [
