@@ -12,7 +12,7 @@ class SampleApp extends StatelessWidget {
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const Sample(),
+        builder: (context, state) => const MainScreen(),
         routes: [
           GoRoute(
             path: 'extract',

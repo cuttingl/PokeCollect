@@ -11,26 +11,28 @@ import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart
 import 'package:pokecollect/env.dart';
 import 'package:http/http.dart' as http;
 
-class Sample extends StatefulWidget {
-  const Sample({super.key});
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
 
   @override
-  State<Sample> createState() => _SampleState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _SampleState extends State<Sample> {
+class _MainScreenState extends State<MainScreen> {
+  int _selectedIndex = 0;
+  String extractedText = "";
+
   bool isChecked = false;
   PokemonCard? card;
   List<TextBlock>? blocks;
   Image image = Image.network(
       "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1msMCg.img");
   String text = "";
-  String extractedText = "";
   final textDetector = TextRecognizer(script: TextRecognitionScript.latin);
 
   Future<PokemonCard?> getApi() async {
     final api = PokemonTcgApi(apiKey: apikey);
-    card = await api.getCard('sv6-5');
+    card = await api.getCard('sv6-6');
     return card;
   }
 
@@ -47,24 +49,28 @@ class _SampleState extends State<Sample> {
     return blocks;
   }
 
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     getApi();
     getExtractedText();
     return Scaffold(
         bottomNavigationBar: CurvedNavigationBar(
-          animationDuration: Duration(milliseconds: 200),
-          color: Color.fromRGBO(238, 189, 0, 1),
-          backgroundColor: Colors.transparent,
-          buttonBackgroundColor: Color.fromRGBO(238, 189, 0, 1),
-          items: [
-            CurvedNavigationBarItem(child: Icon(Icons.home), label: 'Home'),
-            CurvedNavigationBarItem(child: Icon(Icons.camera), label: 'Camera'),
-            CurvedNavigationBarItem(child: Icon(Icons.search), label: 'Search'),
-          ],
-          onTap: (index) {
-            print("Index of the page is : $index");
-          }
+            animationDuration: Duration(milliseconds: 200),
+            color: Color.fromRGBO(238, 189, 0, 1),
+            backgroundColor: Colors.transparent,
+            buttonBackgroundColor: Color.fromRGBO(238, 189, 0, 1),
+            items: [
+              CurvedNavigationBarItem(child: Icon(Icons.home), label: 'Home'),
+              CurvedNavigationBarItem(child: Icon(Icons.camera), label: 'Camera'),
+              CurvedNavigationBarItem(child: Icon(Icons.text_snippet), label: 'Extracted Text'),
+            ],
+            onTap: _indexHandler,
         ),
         body: Container(
             child:
@@ -108,5 +114,18 @@ class _SampleState extends State<Sample> {
               child: const SelectionContainer.disabled(
                   child: Text("Tap to go to extract view"))),
         ])));
+  }
+
+  _indexHandler(int index) {
+    print("Index de la bottom navigation bar : " + index.toString());
+    switch (index){
+      case 0:
+        break;
+      case 1:
+        break;
+      case 2:
+        context.go('/extract', extra: blocks);
+        break;
+    }
   }
 }
