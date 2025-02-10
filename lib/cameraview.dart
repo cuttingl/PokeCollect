@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class Cameraview extends StatefulWidget {
-  Cameraview({super.key, required this.cameras});
-
-  List<CameraDescription>? cameras;
+  Cameraview({super.key});
 
   @override
   State<Cameraview> createState() => _CameraviewState();
@@ -17,30 +15,7 @@ class _CameraviewState extends State<Cameraview> {
 
   @override
   void initState() {
-    super.initState();
-    initCamera(widget.cameras![1]);
-    for (var it in widget.cameras!) {
-      print(it.name);
-    }
-    requestStoragePermission();
-    controller = CameraController(widget.cameras![1], ResolutionPreset.max);
-    controller.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
-    }).catchError((Object e) {
-      if (e is CameraException) {
-        switch (e.code) {
-          case 'CameraAccessDenied':
-            // Handle access errors here.
-            break;
-          default:
-            // Handle other errors here.
-            break;
-        }
-      }
-    });
+
   }
 
   @override
